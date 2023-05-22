@@ -16,20 +16,16 @@
     </head>
     <body class="font-sans text-gray-900 antialiased">
 
-        <div id="app">
-
-            <main class="">
-                <div class="container-fluid">
-                    <div class='row'>
-                        <div class="col-2">
-                            @include('partials.sidebar')
-                        </div>
-
-                    </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3">
+                    @include('partials.sidebar')
                 </div>
-            </main>
+                <div class="col-9">
+                    @yield('content')
+                </div>
+            </div>
         </div>
         
     </body>
 </html>
-
