@@ -1,22 +1,24 @@
-<div class="d-flex flex-column flex-shrink-0 p-2 bg-body-tertiary border-end h-100">
+<div class="d-flex flex-column flex-shrink-0 p-2 bg-body-tertiary border-end">
+  <div class="sidebar_top">
     <a href="{{route('admin.projects.index')}}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
       <span class="fs-4">Home</span>
     </a>
     <hr>
-    <ul class="list-group">
-      <li class="list-group-item active" aria-current="true">
-        <a href="{{route('admin.dashboard')}}" class="text-decoration-none text-white">
+    <ul class="nav nav-pills flex-column mb-auto">
+      <li class="nav-item">
+        <a href="{{route('admin.dashboard')}}" class="nav-link {{Route::currentRouteName() == 'admin.dashboard'?'active':''}}">
           Dashboard
         </a>
       </li>
-      <li class="list-group-item">
-        <a href="{{route('admin.projects.index')}}" class="text-decoration-none text-black">
+      <li class="nav-item">
+        <a href="{{route('admin.projects.index')}}" class="nav-link @if (Route::currentRouteName() == 'admin.projects.index') active @endif">
           Projects
         </a>
       </li>
     </ul>
+  </div>
     <hr>
-    <div class="dropdown">
+    <div class="dropdown sidebar_down">
       <ul class="navbar-nav ml-auto">
         <!-- Authentication Links -->
         @guest
@@ -38,7 +40,7 @@
                 <a class="dropdown-item" href="{{ route('admin.dashboard') }}">{{__('Dashboard')}}</a>
                 <a class="dropdown-item" href="{{ url('profile') }}">{{__('Profile')}}</a>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                     document.getElementById('logout-form').submit();">
+                document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                 </a>
 
