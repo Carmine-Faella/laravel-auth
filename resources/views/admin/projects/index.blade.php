@@ -1,13 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
-
+<a href="{{route('admin.projects.create')}}" class="btn btn-primary">Crea una nuova card</a>
 <table class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">Titolo</th>
-        <th scope="col">Slug</th>
         <th scope="col">Azioni</th>
       </tr>
     </thead>
@@ -16,8 +15,22 @@
           <tr>
             <td>{{ $project->id }}</td>
             <td>{{ $project->title }}</td>
-            <td>{{ $project->slug }}</td>
-            <td><a class="btn btn-primary" href="{{route('admin.projects.show', $project->id)}}">VEDI</a></td>
+            <td class="d-flex">
+              <div>
+                <a class="btn btn-primary" href="{{route('admin.projects.show', $project->id)}}">VEDI</a>
+              </div>
+              <div class="px-2">
+                <a href="{{route('admin.projects.edit', ['project' => $project->id])}}" class="btn btn-info text-white">Modifica</a>
+              </div>
+              <form action="{{ route('admin.projects.destroy', ['project' => $project->id]) }}" method="POST" onsubmit="return confirm('Vuoi Eliminare?');">
+                @csrf
+                @method('DELETE')
+  
+                <button type="submit" class="btn btn-danger">Elimina</button>
+              </form>
+  
+            </td>
+
           </tr>
         @endforeach
     </tbody>

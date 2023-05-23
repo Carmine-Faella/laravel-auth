@@ -21,6 +21,7 @@ class ProjectSeeder extends Seeder
             $newProject = new Project();
             $newProject->title = $faker->sentence(5);
             $newProject->content = $faker->text(100);
+            $newProject->cover_image = 'https://picsum.photos/150/150';
             $newProject->slug = Str::slug($newProject->title, '-');
             $newProject->save();
         }
