@@ -17,12 +17,12 @@
             <td>{{ $project->title }}</td>
             <td class="d-flex">
               <div>
-                <a class="btn btn-primary" href="{{route('admin.projects.show', $project->id)}}">VEDI</a>
+                <a class="btn btn-primary" href="{{route('admin.projects.show', $project->slug)}}">VEDI</a>
               </div>
               <div class="px-2">
-                <a href="{{route('admin.projects.edit', ['project' => $project->id])}}" class="btn btn-info text-white">Modifica</a>
+                <a href="{{route('admin.projects.edit', ['project' => $project->slug])}}" class="btn btn-info text-white">Modifica</a>
               </div>
-              <form action="{{ route('admin.projects.destroy', ['project' => $project->id]) }}" method="POST" onsubmit="return confirm('Vuoi Eliminare?');">
+              <form action="{{ route('admin.projects.destroy', ['project' => $project->slug]) }}" method="POST" onsubmit="return confirm('Vuoi Eliminare?');">
                 @csrf
                 @method('DELETE')
   

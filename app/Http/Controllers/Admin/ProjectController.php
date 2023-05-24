@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -40,9 +41,15 @@ class ProjectController extends Controller
         $form_data = $request->all();
         $form_data = $this->validation($request->all());
 
+        $form_data['slug'] = Project::generateSlug($request->title);
         $newProject = Project::create($form_data);
 
-        return redirect()->route('admin.projects.show', ['project' => $newProject->id])->with('status', 'Project aggiunto con successo');;
+        $checkPost = Project::where('slug', $form_data['slug'])->first();
+        if ($checkPost) {
+            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
+        }
+
+        return redirect()->route('admin.projects.show', ['project' => $newProject->slug])->with('status', 'Project aggiunto con successo');;
     }
 
     /**
@@ -76,11 +83,18 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        $form_data = $this->validation($request->all());
         $form_data = $request->all();
+        $form_data = $this->validation($request->all());
+        $form_data['slug'] = Project::generateSlug($request->title);
+
+        $checkPost = Project::where('slug', $form_data['slug'])->where('id','<>',$project->id)->first();
+        if ($checkPost) {
+            return back()->withInput()->withErrors(['slug' => 'Impossibile creare lo slug per questo post, cambia il titolo']);
+        }
+        
         $project->update($form_data);
 
-        return redirect()->route('admin.projects.show', ['project' => $project->id])->with('status', 'Project Aggiornato!');
+        return redirect()->route('admin.projects.show', ['project' => $project->slug])->with('status', 'Project Aggiornato!');
     }
 
     /**
@@ -93,7 +107,7 @@ class ProjectController extends Controller
     {
         $project->delete();
 
-        return redirect()->route('admin.projects.index', ['project' => $project->id]);
+        return redirect()->route('admin.projects.index', ['project' => $project->slug]);
     }
 
     private function validation($data) {

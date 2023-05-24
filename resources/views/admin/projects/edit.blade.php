@@ -8,7 +8,7 @@
         <a href="{{route('admin.projects.index')}}" class="btn btn-secondary">Torna alla lista</a>
     </div>
 
-    <form method="POST" action="{{route('admin.projects.update',['project'=> $project->id])}}">
+    <form method="POST" action="{{route('admin.projects.update',['project'=> $project->slug])}}">
 
         @csrf
         @method('PUT')
